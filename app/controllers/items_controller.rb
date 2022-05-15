@@ -3,6 +3,6 @@ class ItemsController < ApplicationController
   end
   def new
   end
-  def destroy
+  def create
   end
 end
