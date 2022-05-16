@@ -17,16 +17,13 @@ class ItemsController < ApplicationController
     end
   end
   def show
-    @item
   end
   def edit
-    unless Item.find(params[:id]).user.id == current_user.id
+    unless @items.user.id == current_user.id
       redirect_to action: :index
     end
-    @item
   end
   def update
-    @item
     if  @item.update(item_params)
       redirect_to item_path
     else
