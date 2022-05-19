@@ -1,9 +1,10 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :destroy]
-  before_action :item_find, only: [:show, :edit, :update, :destroy]
+  before_action :item_find, only: [ :show, :edit, :update, :destroy]
 
   def index
     @items = Item.order(id: "DESC")
+    @orders = Order.all
   end
   def new
     @item = Item.new
@@ -19,7 +20,9 @@ class ItemsController < ApplicationController
   def show
   end
   def edit
-    unless @item.user.id == current_user.id
+    if @item.user.id != current_user.id
+      redirect_to action: :index
+    elsif @item.order != nil
       redirect_to action: :index
     end
   end
@@ -46,3 +49,4 @@ class ItemsController < ApplicationController
   end
 
 end
+
